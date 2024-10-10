@@ -1,5 +1,8 @@
 name: Build-Java-Library
 
+permissions:
+  id-token: write
+
 on:
   workflow_dispatch:
   push:

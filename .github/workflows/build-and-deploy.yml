@@ -53,8 +53,8 @@ jobs:
           --server-id-deploy=setup-jfrog-cli-server \
           --repo-resolve-releases=mavencentral-remote \
           --repo-resolve-snapshots=mavencentral-remote \
-          --repo-deploy-releases=tomj-time-lib-maven-snapshot-local \
-          --repo-deploy-snapshots=tomj-time-lib-maven-release-local
+          --repo-deploy-releases=tomj-time-lib-maven-release-local \
+          --repo-deploy-snapshots=tomj-time-lib-maven-snapshot-local
 
       - name: Build Library
         run: |

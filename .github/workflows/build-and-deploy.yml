@@ -1,4 +1,4 @@
-name: Build Java Library
+name: Build-Java-Library
 
 on:
   workflow_dispatch:
@@ -17,13 +17,21 @@ jobs:
       # Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v3
-
       # Set up JDK (Java Development Kit)
       - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
           distribution: 'corretto'
           java-version: '21'  # You can change this to '8', '17', etc., depending on your project
+
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        id: setup-jfrog-cli
+        env:
+          JF_URL: ${{ vars.JF_URL }}
+        with:
+          oidc-provider-name: github-oidc-integration
+          oidc-audience: jfrog-github
 
       # Cache Maven dependencies for faster builds
       - name: Cache Maven packages
@@ -34,6 +42,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Build with Maven
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Configure Maven
+        shell: bash
+        run: |
+          jf mvc \
+          --server-id-resolve=setup-jfrog-cli-server \
+          --server-id-deploy=setup-jfrog-cli-server \
+          --repo-resolve-releases=mavencentral-remote \
+          --repo-resolve-snapshots=mavencentral-remote \
+          --repo-deploy-releases=tomj-time-lib-maven-snapshot-local \
+          --repo-deploy-snapshots=tomj-time-lib-maven-release-local
+
+      - name: Build Library
+        run: |
+          jf mvn clean install --project tomj-time-lib --build-name=tomj-time-library --build-number=${{ github.run_number }}
+
+

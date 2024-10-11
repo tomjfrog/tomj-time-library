@@ -58,6 +58,6 @@ jobs:
 
       - name: Build Library
         run: |
-          jf mvn clean install --project tomj-time-lib --build-name=tomj-time-library --build-number=${{ github.run_number }}
+          jf mvn clean install --project tomj-time-lib
 
 

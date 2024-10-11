@@ -58,6 +58,6 @@ jobs:
 
       - name: Build Library
         run: |
-          jf mvn clean install --project tomj-time-lib
+          jf mvn clean install
 
 

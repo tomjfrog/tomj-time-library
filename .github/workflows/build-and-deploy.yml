@@ -32,6 +32,7 @@ jobs:
         id: setup-jfrog-cli
         env:
           JF_URL: ${{ vars.JF_URL }}
+          JF_PROJECT: "tomj-time-lib"
         with:
           oidc-provider-name: github-oidc-integration
           oidc-audience: jfrog-github
@@ -56,6 +57,7 @@ jobs:
           --repo-deploy-releases=tomj-time-lib-maven-release-local \
           --repo-deploy-snapshots=tomj-time-lib-maven-snapshot-local
 
+      # Note, the JF CLI will not automatically publish build info, and will use the JF_PROJECT as the --project parameter for all commands that take can accept it.
       - name: Build Library
         run: |
           jf mvn clean install

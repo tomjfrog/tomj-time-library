@@ -34,5 +34,5 @@ jobs:
             --url /api/search/aql \
             --header 'Content-Type: text/plain' \
             --data 'builds.find({\"@buildInfo.env.GITHUB_SHA\":\"${{ github.sha }}\"}).include(\"name\", \"number\")'
-            echo 'EOF'
+            echo EOF
           } >> $GITHUB_OUTPUT

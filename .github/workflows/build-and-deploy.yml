@@ -57,9 +57,8 @@ jobs:
           --repo-deploy-releases=tomj-time-lib-maven-release-local \
           --repo-deploy-snapshots=tomj-time-lib-maven-snapshot-local
 
-      # Note, the JF CLI will not automatically publish build info, and will use the JF_PROJECT as the --project parameter for all commands that take can accept it.
+      # Note, the JF CLI will automatically publish build info, and will use the JF_PROJECT as the --project parameter for all commands that take can accept it.
+      # This automatic publishing will not happen if a build-name, build-number or project parameter is passed in
       - name: Build Library
         run: |
           jf mvn clean install
-
-

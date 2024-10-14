@@ -1,0 +1,39 @@
+name: Build-Java-Library
+
+permissions:
+  id-token: write
+
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - released
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        id: setup-jfrog-cli
+        env:
+          JF_URL: ${{ vars.JF_URL }}
+          JF_PROJECT: "tomj-time-lib"
+        with:
+          oidc-provider-name: github-oidc-integration
+          oidc-audience: jfrog-github
+
+      # Find the JFrog Build-Info with the COMMIT_SHA that matches the Release Tag's COMMIT_SHA pointer
+      - name: Find Build Associated with Release COMMIT_SHA
+        id: find-build-by-commit
+        run: |
+          {
+            echo 'commit_sha<<EOF'
+            jf curl -XPOST \
+            --url /api/search/aql \
+            --header 'Content-Type: text/plain' \
+            --data 'builds.find({	"@buildInfo.env.GITHUB_SHA":"${{ github.sha }}"
+            }).include("name", "number")')
+            echo EOF
+          } >> $GITHUB_OUTPUT

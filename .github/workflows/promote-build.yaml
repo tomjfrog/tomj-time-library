@@ -29,4 +29,4 @@ jobs:
         working-directory: .github/workflows
         id: find-build-by-commit
         run: |
-          python3 find-build.py --commit_sha ${{ git.commit_sha }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }}
+          python3 find-build.py --commit_sha ${{ github.commit_sha }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }}

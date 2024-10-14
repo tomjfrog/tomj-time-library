@@ -29,10 +29,10 @@ jobs:
         id: find-build-by-commit
         run: |
           {
-            echo 'commit_sha<<EOF'
+            echo commit_sha<<EOF
             jf curl -XPOST \
             --url /api/search/aql \
             --header 'Content-Type: text/plain' \
             --data "builds.find({\"\@buildInfo.env.GITHUB_SHA\":\"${{ github.sha }}\"}).include(\"name\", \"number\")"
-            echo 'EOF'
+            echo EOF
           } >> $GITHUB_OUTPUT

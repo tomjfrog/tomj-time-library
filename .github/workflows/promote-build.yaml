@@ -33,6 +33,6 @@ jobs:
             jf curl -XPOST \
             --url /api/search/aql \
             --header 'Content-Type: text/plain' \
-            --data 'builds.find({\"@buildInfo.env.GITHUB_SHA\":\"${{ github.sha }}\"}).include(\"name\", \"number\")
+            --data 'builds.find({\"@buildInfo.env.GITHUB_SHA\":\"${{ github.sha }}\"}).include(\"name\", \"number\")'
             echo 'EOF'
           } >> $GITHUB_OUTPUT

@@ -61,12 +61,7 @@ jobs:
       - name: Create Release Bundle
         id: create-release-bundle
         run: |
-          jf release-bundle-create \
-          --spec=.github/workflows/create-release-bundle-from-build.yml \
-          --spec-vars="build_name=${{ steps.set-build-info.outputs.build_name }}";"build_number=${{ steps.set-build-info.outputs.build_name }}" \
-          --signing-key="foo" \
-          tomj-time-lib ${{ github.run_number }}
-          
+          jf release-bundle-create --spec=.github/workflows/create-release-bundle-from-build.yml --spec-vars="build_name=${{ steps.set-build-info.outputs.build_name }}";"build_number=${{ steps.set-build-info.outputs.build_name }}" --signing-key="foo" tomj-time-lib ${{ github.run_number }}
 
 #      - name: Promote Release Bundle to Snapshot Repos
 #        id: promote-release-bundle-to-snapshot

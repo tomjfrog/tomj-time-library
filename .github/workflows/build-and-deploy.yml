@@ -74,3 +74,7 @@ jobs:
       - name: Publish Build Info
         run: |
           jf rt bp tomj-time-lib ${{ github.run_number }}
+
+      - name: Set Properties on Published Artifacts
+        run: |
+          jf rt set-props commit_sha=${{ github.sha }} --build tomj-time-lib/${{ github.run_number }}

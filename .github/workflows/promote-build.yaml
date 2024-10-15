@@ -55,7 +55,7 @@ jobs:
         run: |
           # Check if inputs are provided, otherwise use outputs from previous step
           echo "build_name=${{ inputs.build_name != '' && inputs.build_name || steps.find-build-by-commit.outputs.build_name }}" >> $GITHUB_OUTPUT
-          build_number=${{ inputs.build_number != '' && inputs.build_number || steps.find-build-by-commit.outputs.build_number }} >> $GITHUB_OUTPUT
+          echo "build_number=${{ inputs.build_number != '' && inputs.build_number || steps.find-build-by-commit.outputs.build_number }}" >> $GITHUB_OUTPUT
 
       - name: Promote the Build Artifacts
         id: promote-build

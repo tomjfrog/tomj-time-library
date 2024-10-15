@@ -36,8 +36,8 @@ def search_builds(github_sha, access_token):
 def main():
     # Set up argument parsing
     parser = argparse.ArgumentParser(description="Search builds by GitHub SHA.")
-    parser.add_argument("github_sha", help="The GitHub SHA to for which to search.")
-    parser.add_argument("access_token", help="A valid JFrog access token to make the request.")
+    parser.add_argument("--github_sha", help="The GitHub SHA to for which to search.")
+    parser.add_argument("--access_token", help="A valid JFrog access token to make the request.")
 
     # Parse the arguments
     args = parser.parse_args()

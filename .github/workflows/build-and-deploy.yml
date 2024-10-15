@@ -38,6 +38,7 @@ jobs:
         with:
           oidc-provider-name: github-oidc-integration
           oidc-audience: jfrog-github
+          disable-auto-build-publish: true
 
       # Cache Maven dependencies for faster builds
       - name: Cache Maven packages
@@ -63,4 +64,13 @@ jobs:
       # This automatic publishing will not happen if a build-name, build-number or project parameter is passed in
       - name: Build Library
         run: |
-          jf mvn clean install
+          jf mvn clean install --build-name=tomj-time-lib --build-number ${{ github.run_number }}
+
+      - name: Prepare Build Info
+        run: |
+          jf bag --build-name=tomj-time-lib --build-number ${{ github.run_number }}
+          jf bce --build-name=tomj-time-lib --build-number ${{ github.run_number }}
+
+      - name: Publish Build Info
+        run: |
+          jf bp tomj-time-lib ${{ github.run_number }}

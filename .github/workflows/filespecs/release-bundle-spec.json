@@ -1,0 +1,8 @@
+{
+  "files": [
+    {
+      "build": "${build_name}/${build_number}",
+      "project": "tomj-time-lib"
+    }
+  ]
+}

@@ -5,6 +5,16 @@ permissions:
 
 on:
   workflow_dispatch:
+    inputs:
+      build_name:
+        description: 'The name of the build to promote'
+        required: false
+        default: 'build-name'
+      build_number:
+        description: 'The number of the build to promote'
+        required: false
+        default: 'build-number'
+
   release:
     types:
       - released
@@ -26,8 +36,11 @@ jobs:
           oidc-provider-name: github-oidc-integration
           oidc-audience: jfrog-github
 
-      # Find the JFrog Build-Info with the COMMIT_SHA that matches the Release Tag's COMMIT_SHA pointer
+      # Find the JFrog Build-Info with the COMMIT_SHA that matches the Release Tag's COMMIT_SHA pointer.  This only works
+      # if there have been new commits on the Git repo that didn't result in a new artifacy build-and-publish.  Most often,
+      # this will be due to updates to this Actions spec.
       - name: Find Build Associated with Release COMMIT_SHA
+        if: ${{ inputs.build_name == '' && inputs.build_number == '' }}
         working-directory: .github/workflows
         id: find-build-by-commit
         run: |
@@ -37,7 +50,18 @@ jobs:
           echo "build_name=build_name" >> $GITHUB_OUTPUT
           echo "build_number=build_number" >> $GITHUB_OUTPUT
 
+      - name: Set Build Name and Build Number to Promote
+        id: set-build-info
+        run: |
+          # Check if inputs are provided, otherwise use outputs from previous step
+          build_name=${{ inputs.build_name != '' && inputs.build_name || steps.find-build-by-commit.outputs.build_name }}
+          build_number=${{ inputs.build_number != '' && inputs.build_number || steps.find-build-by-commit.outputs.build_number }}
+          
+          echo "build_name=build_name" >> $GITHUB_OUTPUT
+          echo "build_number=build_number" >> $GITHUB_OUTPUT
+
       - name: Promote the Build Artifacts
         id: promote-build
         run: |
-          jf rt build-promote 
+          jf rt build-promote ${{ steps.set-build-info.outputs.build_name }} ${{ steps.set-build-info.outputs.build_number }} tomj-time-lib-maven-release-local
+          jf rt build-promote ${{ steps.set-build-info.outputs.build_name }} ${{ steps.set-build-info.outputs.build_number }} global-shared-maven-release-local

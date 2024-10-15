@@ -1,4 +1,4 @@
-name: Build-Java-Library
+name: Build and Publish
 
 permissions:
   id-token: write

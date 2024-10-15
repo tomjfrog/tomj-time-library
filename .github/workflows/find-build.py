@@ -2,7 +2,7 @@ import http.client
 import argparse
 
 # Function to make the HTTP request
-def search_builds(github_sha):
+def search_builds(github_sha, access_token):
     # Create a connection to the server
     conn = http.client.HTTPSConnection("tomjfrog.jfrog.io")
 
@@ -43,7 +43,7 @@ def main():
     args = parser.parse_args()
 
     # Call the search function with the provided GitHub SHA
-    search_builds(args.github_sha)
+    search_builds(args.github_sha, args.github_sha)
 
 if __name__ == "__main__":
     main()

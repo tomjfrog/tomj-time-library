@@ -68,8 +68,8 @@ jobs:
 
       - name: Prepare Build Info
         run: |
-          jf bag --build-name=tomj-time-lib --build-number ${{ github.run_number }}
-          jf bce --build-name=tomj-time-lib --build-number ${{ github.run_number }}
+          jf rt bag --build-name=tomj-time-lib --build-number ${{ github.run_number }}
+          jf rt bce --build-name=tomj-time-lib --build-number ${{ github.run_number }}
 
       - name: Publish Build Info
         run: |

@@ -31,4 +31,13 @@ jobs:
         working-directory: .github/workflows
         id: find-build-by-commit
         run: |
-          python3 find-build.py --commit_sha ${{ github.sha }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }}
+          python3 find-build.py --commit_sha ${{ github.sha }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }} > build-query-result.json
+          build_name=$(jq -r '.results.build.name' build-query-result.json)
+          commit_number=$(jq -r 'results.build.number' build-query-result.json)
+          echo "build_name=build_name" >> $GITHUB_OUTPUT
+          echo "build_number=build_number" >> $GITHUB_OUTPUT
+
+      - name: Promote the Build Artifacts
+        id: promote-build
+        run: |
+          jf rt build-promote 

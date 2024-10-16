@@ -60,7 +60,8 @@ jobs:
           tomj-time-lib ${{ github.run_number }} \
           --spec=./.github/workflows/filespecs/release-bundle-spec.json \
           --spec-vars="build_name=${{ steps.set-build-info.outputs.build_name }};build_number=${{ steps.set-build-info.outputs.build_number }}" \
-          --signing-key="tomj-gpg-key" 
+          --signing-key="tomj-gpg-key" \
+          --sync=true
 
       # Promote the Release Bundle to Dev
       - name: Promote Release Bundle to Snapshot Repos

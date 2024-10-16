@@ -53,11 +53,6 @@ jobs:
           echo "build_name=${{ inputs.build_name != '' && inputs.build_name || steps.find-build-by-commit.outputs.build_name }}" >> $GITHUB_OUTPUT
           echo "build_number=${{ inputs.build_number != '' && inputs.build_number || steps.find-build-by-commit.outputs.build_number }}" >> $GITHUB_OUTPUT
 
-#      - name: Promote the Build Artifacts
-#        id: promote-build
-#        run: |
-#          jf rt build-promote ${{ steps.set-build-info.outputs.build_name }} ${{ steps.set-build-info.outputs.build_number }} tomj-time-lib-maven-release-local
-#          jf rt build-promote ${{ steps.set-build-info.outputs.build_name }} ${{ steps.set-build-info.outputs.build_number }} global-shared-maven-release-local
       - name: Create Release Bundle
         id: create-release-bundle
         run: |
@@ -67,7 +62,10 @@ jobs:
           --spec-vars="build_name=${{ steps.set-build-info.outputs.build_name }};build_number=${{ steps.set-build-info.outputs.build_number }}" \
           --signing-key="tomj-gpg-key" 
 
-#      - name: Promote Release Bundle to Snapshot Repos
-#        id: promote-release-bundle-to-snapshot
-#        run: |
-#          jf release-bundle-promote
+      # Promote the Release Bundle to Dev
+      - name: Promote Release Bundle to Snapshot Repos
+        id: promote-release-bundle-to-snapshot
+        run: |
+          jf release-bundle-promote \
+          tomj-time-lib ${{ github.run_number }} DEV \
+          --signing-key="tomj-gpg-key" \

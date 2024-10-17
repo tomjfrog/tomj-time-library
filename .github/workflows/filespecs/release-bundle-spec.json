@@ -2,6 +2,7 @@
   "files": [
     {
       "build": "${build_name}/${build_number}",
+      "includeDeps": "true",
       "project": "tomj-time-lib"
     }
   ]

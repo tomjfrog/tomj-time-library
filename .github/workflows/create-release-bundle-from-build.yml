@@ -63,10 +63,10 @@ jobs:
           --signing-key="tomj-gpg-key" \
           --sync=true
 
-#      # Promote the Release Bundle to Dev
-#      - name: Promote Release Bundle to Snapshot Repos
-#        id: promote-release-bundle-to-snapshot
-#        run: |
-#          jf release-bundle-promote \
-#          tomj-time-lib ${{ github.run_number }} DEV \
-#          --signing-key="tomj-gpg-key" \
+      # Promote the Release Bundle to Dev
+      - name: Promote Release Bundle to Snapshot Repos
+        id: promote-release-bundle-to-snapshot
+        run: |
+          jf release-bundle-promote \
+          tomj-time-lib ${{ github.run_number }} DEV \
+          --signing-key="tomj-gpg-key"

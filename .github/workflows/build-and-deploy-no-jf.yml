@@ -63,11 +63,16 @@ jobs:
           echo $(pwd)
           echo $(ls ~)
           echo $(ls -lah ~/.m2/repository)
-      
+
+      - name: Prepre GAV String for Build Info Module Link
+        id: gav
+        run: |
+          echo GAV="$(mvn help:evaluate -Dexpression=project.groupId -q -DforceStdout):$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout):$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
+
 
       - name: Prepare Build Info
         run: |
-          jf rt build-add-dependencies --spec .github/workflows/filespecs/add-local-maven-repo-deps.json tomj-time-lib ${{ github.run_number }}
+          jf rt build-add-dependencies --spec .github/workflows/filespecs/add-local-maven-repo-deps.json tomj-time-lib ${{ github.run_number }} --module ${{ steps.gav.outputs.GAV }}
           jf rt bag tomj-time-lib ${{ github.run_number }}
           jf rt bce tomj-time-lib ${{ github.run_number }}
 

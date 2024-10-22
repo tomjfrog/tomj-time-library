@@ -32,6 +32,11 @@ jobs:
           oidc-audience: jfrog-github
           disable-auto-build-publish: true
 
+      - name: maven-settings-action
+        uses: s4u/maven-settings-action@v3.0.0
+        with:
+          servers: '[{"id": "central", "username": "tomj@jfrog.com", "password": "${{ steps.setup-jfrog-cli.outputs.oidc-token}}"},{"id": "snapshots", "username": "tomj@jfrog.com", "password": "${{ steps.setup-jfrog-cli.outputs.oidc-token}}"}]'
+
       # Cache Maven dependencies for faster builds
       - name: Cache Maven packages
         uses: actions/cache@v3
@@ -41,22 +46,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Configure Maven
-        shell: bash
-        run: |
-          jf mvnc \
-          --server-id-resolve=setup-jfrog-cli-server \
-          --server-id-deploy=setup-jfrog-cli-server \
-          --repo-resolve-releases=mavencentral-remote \
-          --repo-resolve-snapshots=mavencentral-remote \
-          --repo-deploy-releases=tomj-time-lib-maven-release-local \
-          --repo-deploy-snapshots=tomj-time-lib-maven-snapshot-local
-
-      # Note, the JF CLI will automatically publish build info, and will use the JF_PROJECT as the --project parameter for all commands that take can accept it.
-      # This automatic publishing will not happen if a build-name, build-number or project parameter is passed in
+    # purging the local m2 cache doesn't really do anything to separate the actual dependencies from the Maven junk
       - name: Purge Local Maven Cache and Build Library
         run: |
-          mvn clean dependency:purge-local-repository install
+          mvn clean dependency:purge-local-repository install deploy
 
       - name: Look for Maven Local Repository
         run: |
@@ -68,7 +61,6 @@ jobs:
         id: gav
         run: |
           echo GAV="$(mvn help:evaluate -Dexpression=project.groupId -q -DforceStdout):$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout):$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
-
 
       - name: Prepare Build Info
         run: |

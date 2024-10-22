@@ -54,14 +54,16 @@ jobs:
 
       # Note, the JF CLI will automatically publish build info, and will use the JF_PROJECT as the --project parameter for all commands that take can accept it.
       # This automatic publishing will not happen if a build-name, build-number or project parameter is passed in
-      - name: Build Library
+      - name: Purge Local Maven Cache and Build Library
         run: |
-          mvn clean install
+          mvn clean dependency:purge-local-repository install
 
       - name: Look for Maven Local Repository
         run: |
           echo $(pwd)
+          echo $(ls ~)
           echo $(ls -lah ~/.m2/repository)
+      
 
       - name: Prepare Build Info
         run: |

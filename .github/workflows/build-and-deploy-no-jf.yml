@@ -5,14 +5,6 @@ permissions:
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - '.github/workflows/**'
-  pull_request:
-    branches:
-      - main
 
 jobs:
   build:
@@ -64,13 +56,16 @@ jobs:
       # This automatic publishing will not happen if a build-name, build-number or project parameter is passed in
       - name: Build Library
         run: |
-          jf mvn clean install \
-          -Dapp.version=1.2.3 \
-          --build-name=tomj-time-lib \
-          --build-number ${{ github.run_number }}
+          mvn clean install
+
+      - name: Look for Maven Local Repository
+        run: |
+          echo $(pwd)
+          echo $(ls -lah ~/.m2)
 
       - name: Prepare Build Info
         run: |
+          jf rt build-add-dependencies 
           jf rt bag tomj-time-lib ${{ github.run_number }}
           jf rt bce tomj-time-lib ${{ github.run_number }}
 

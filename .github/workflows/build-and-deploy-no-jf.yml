@@ -65,7 +65,7 @@ jobs:
 
       - name: Prepare Build Info
         run: |
-          jf rt build-add-dependencies --spec .github/workflows/filespecs/add-local-maven-repo-deps.json tomj-time-lib ${{ github.run_number }} /home/runner/work/tomj-time-library/tomj-time-library/.m2/repository/*"
+          jf rt build-add-dependencies --spec .github/workflows/filespecs/add-local-maven-repo-deps.json tomj-time-lib ${{ github.run_number }}
           jf rt bag tomj-time-lib ${{ github.run_number }}
           jf rt bce tomj-time-lib ${{ github.run_number }}
 

@@ -61,7 +61,7 @@ jobs:
       - name: Look for Maven Local Repository
         run: |
           echo $(pwd)
-          echo $(ls -lah ~/.m2)
+          echo $(ls -lah ~/.m2/repository)
 
       - name: Prepare Build Info
         run: |

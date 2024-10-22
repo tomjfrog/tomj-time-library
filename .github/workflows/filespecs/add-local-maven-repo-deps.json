@@ -1,7 +1,7 @@
 {
   "files": [
     {
-      "pattern": "/home/runner/work/tomj-time-library/tomj-time-library/.m2/repository/*"
+      "pattern": "/home/runner/.m2/repository/*"
     }
   ]
 }

@@ -38,6 +38,18 @@
     </build>
     <profiles>
         <profile>
+            <distributionManagement>
+                <repository>
+                    <id>central</id>
+                    <name>tomj-time-lib-maven-release-virtual</name>
+                    <url>https://tomjfrog.jfrog.io/artifactory/tomj-time-lib-maven-release-virtual</url>
+                </repository>
+                <snapshotRepository>
+                  <id>snapshots</id>
+                  <name>tomj-time-lib-maven-snapshot-virtual</name>
+                  <url>https://tomjfrog.jfrog.io/artifactory/tomj-time-lib-maven-snapshot-virtual</url>
+                </snapshotRepository>
+            </distributionManagement>
             <repositories>
                 <repository>
                     <snapshots>

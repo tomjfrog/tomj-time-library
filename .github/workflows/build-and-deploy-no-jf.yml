@@ -49,7 +49,7 @@ jobs:
     # purging the local m2 cache doesn't really do anything to separate the actual dependencies from the Maven junk
       - name: Purge Local Maven Cache and Build Library
         run: |
-          mvn clean dependency:purge-local-repository install deploy
+          mvn clean install deploy -P artifactory
 
       - name: Look for Maven Local Repository
         run: |

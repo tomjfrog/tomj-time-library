@@ -40,10 +40,15 @@ jobs:
 #            "id": "central", "username": "tomj@jfrog.com", "password": "${{ steps.setup-jfrog-cli.outputs.oidc-token}}"},{"id": "snapshots", "username": "tomj@jfrog.com", "password": "${{ steps.setup-jfrog-cli.outputs.oidc-token}}"}]
 
       - name: Set Maven Settings From Secret
-        run:  |
+        run: |
           echo "${{ secrets.MAVEN_SETTINGS }}" | base64 --decode > /home/runner/.m2/settings.xml
 
-      # Cache Maven dependencies for faster builds
+      - name: Debug Maven Settings
+        run: |
+          head -n 6 /home/runner/.m2/settings.xml
+
+
+    # Cache Maven dependencies for faster builds
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
@@ -55,7 +60,7 @@ jobs:
     # purging the local m2 cache doesn't really do anything to separate the actual dependencies from the Maven junk
       - name: Purge Local Maven Cache and Build Library
         run: |
-          mvn clean install deploy -P artifactory -s /home/runner/.m2/settings.xml
+          mvn clean install deploy -P artifactory -s /home/runner/.m2/settings.xml -X
 
       - name: Look for Maven Local Repository
         run: |

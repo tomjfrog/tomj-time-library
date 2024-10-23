@@ -1,4 +1,4 @@
-name: Build and Publish Snapshot Artifact
+name: 'NO JF WRAPPER: Build and Publish Artifact'
 
 permissions:
   id-token: write

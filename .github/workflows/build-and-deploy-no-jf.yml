@@ -32,10 +32,16 @@ jobs:
           oidc-audience: jfrog-github
           disable-auto-build-publish: true
 
-      - name: maven-settings-action
-        uses: s4u/maven-settings-action@v3.0.0
-        with:
-          servers: '[{"id": "central", "username": "tomj@jfrog.com", "password": "${{ steps.setup-jfrog-cli.outputs.oidc-token}}"},{"id": "snapshots", "username": "tomj@jfrog.com", "password": "${{ steps.setup-jfrog-cli.outputs.oidc-token}}"}]'
+#      - name: maven-settings-action
+#        uses: s4u/maven-settings-action@v3.0.0
+#        with:
+#          servers: |
+#          [{
+#            "id": "central", "username": "tomj@jfrog.com", "password": "${{ steps.setup-jfrog-cli.outputs.oidc-token}}"},{"id": "snapshots", "username": "tomj@jfrog.com", "password": "${{ steps.setup-jfrog-cli.outputs.oidc-token}}"}]
+
+      - name: Set Maven Settings From Secret
+        run:  |
+          echo "${{ secrets.MAVEN_SETTINGS }}" | base64 --decode > /home/runner/.m2/settings.xml
 
       # Cache Maven dependencies for faster builds
       - name: Cache Maven packages

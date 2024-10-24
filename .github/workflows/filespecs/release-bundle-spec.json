@@ -1,9 +1,9 @@
 {
   "files": [
     {
-      "build": "${build_name}/${build_number}",
-      "includeDeps": "true",
-      "project": "tomj-time-lib"
+      "pattern": "tomj-time-lib-dependencies-local/*",
+      "project": "tomj-time-lib",
+      "recursive": "true"
     }
   ]
 }

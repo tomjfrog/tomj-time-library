@@ -1,9 +1,9 @@
 {
   "files": [
     {
-      "pattern": "${PATTERN}",
-      "target": "tomj-time-lib-dependencies-local/",
-      "flat": "true"
+      "target": "${TARGET_REPO}/",
+      "build": "${BUILD_NAME}/${BUILD_NUMBER}",
+      "includeDeps": "true"
     }
   ]
 }

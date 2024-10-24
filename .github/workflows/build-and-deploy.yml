@@ -5,14 +5,14 @@ permissions:
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - '.github/workflows/**'
-  pull_request:
-    branches:
-      - main
+#  push:
+#    branches:
+#      - main
+#    paths-ignore:
+#      - '.github/workflows/**'
+#  pull_request:
+#    branches:
+#      - main
 
 jobs:
   build:

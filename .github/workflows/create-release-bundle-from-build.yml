@@ -9,11 +9,11 @@ on:
       build_name:
         description: 'The name of the build to promote'
         required: false
-        default: ''
+        default: 'tomj-time-lib'
       build_number:
         description: 'The number of the build to promote'
         required: false
-        default: ''
+        default: '24'
 
 jobs:
   promote:

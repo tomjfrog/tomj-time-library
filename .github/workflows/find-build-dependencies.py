@@ -4,9 +4,9 @@ import http.client
 def get_build_dependencies(build_name, build_number, access_token):
   conn = http.client.HTTPSConnection("tomjfrog.jfrog.io")
 
-  payload = f"""builds.find({
-    "name": "tomj-time-lib",
-    "number": "23"}).include("module", "module.dependency")"""
+  payload = f"""builds.find({{
+    "name": "{build_name}",
+    "number": "{build_number}"}}).include("module", "module.dependency")"""
 
   headers = {
       'Content-Type': "text/plain",

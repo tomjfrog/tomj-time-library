@@ -54,7 +54,20 @@ jobs:
           echo "build_number=${{ inputs.build_number != '' && inputs.build_number || steps.find-build-by-commit.outputs.build_number }}" >> $GITHUB_OUTPUT
 
       # I'd like to include the dependencies in the Bundle, but I can't include dependencies that are only referenced in a remote repo, why?
-      - name: Copy dependencies to local repo
+      - name: Query Build for Dependencies
+        id: get-build-dependencies
+        working-directory: .github/workflows
+        run: |
+          python3 find-build-dependencies.py --build_name ${{ steps.set-build-info.outputs.build_name }} --build_number ${{ steps.setup-jfrog-cli.outputs.oidc-token }} > dependency-query-result.json
+          dependency_list=$(jq '.results[].modules[].dependencies[]."dependency.name"' dependency-query-result.json
+          echo "dependency_list=dependency_list" >> $GITHUB_OUTPUT
+
+      - name: Copy Dependencies to Local Repo
+        id: generate-local-search-pattern
+        working-directory: .github/workflows
+        run: |
+          pattern=$(python3 generate-local-repository-search-pattern.py)
+          jf rt cp --spec=./filespecs/copy-deps-to-local-repo.json --spec-vars="PATTERN=pattern"
 
       - name: Create Release Bundle
         id: create-release-bundle

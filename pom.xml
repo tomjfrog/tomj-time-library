@@ -21,7 +21,6 @@
             <artifactId>guava</artifactId>
             <version>33.3.1-jre</version>
         </dependency>
-
     </dependencies>
     <build>
         <plugins>
@@ -36,54 +35,4 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <distributionManagement>
-                <repository>
-                    <id>central</id>
-                    <name>tomj-time-lib-maven-release-virtual</name>
-                    <url>https://tomjfrog.jfrog.io/artifactory/tomj-time-lib-maven-release-virtual</url>
-                </repository>
-                <snapshotRepository>
-                  <id>snapshots</id>
-                  <name>tomj-time-lib-maven-snapshot-virtual</name>
-                  <url>https://tomjfrog.jfrog.io/artifactory/tomj-time-lib-maven-snapshot-virtual</url>
-                </snapshotRepository>
-            </distributionManagement>
-            <repositories>
-                <repository>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <id>central</id>
-                    <name>tomj-time-lib-maven-release-virtual</name>
-                    <url>https://tomjfrog.jfrog.io/artifactory/tomj-time-lib-maven-release-virtual</url>
-                </repository>
-                <repository>
-                    <snapshots/>
-                    <id>snapshots</id>
-                    <name>tomj-time-lib-maven-snapshot-virtual</name>
-                    <url>https://tomjfrog.jfrog.io/artifactory/tomj-time-lib-maven-snapshot-virtual</url>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <id>central</id>
-                    <name>tomj-time-lib-maven-release-virtual</name>
-                    <url>https://tomjfrog.jfrog.io/artifactory/tomj-time-lib-maven-release-virtual</url>
-                </pluginRepository>
-                <pluginRepository>
-                    <snapshots/>
-                    <id>snapshots</id>
-                    <name>tomj-time-lib-maven-snapshot-virtual</name>
-                    <url>https://tomjfrog.jfrog.io/artifactory/tomj-time-lib-maven-snapshot-virtual</url>
-                </pluginRepository>
-            </pluginRepositories>
-            <id>artifactory</id>
-        </profile>
-    </profiles>
-
 </project>

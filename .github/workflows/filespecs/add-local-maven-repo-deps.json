@@ -1,7 +1,9 @@
 {
   "files": [
     {
-      "pattern": "/home/runner/.m2/repository/*"
+      "pattern": "${PATTERN}",
+      "target": "tomj-time-lib-dependencies-local/",
+      "flat": "true"
     }
   ]
 }

@@ -3,8 +3,15 @@ name: Build and Publish Snapshot Artifact
 permissions:
   id-token: write
 
+
+
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Library SemVer'
+        required: true
+        default: '0.0.0.0-SNAPSHOT'
 #  push:
 #    branches:
 #      - main
@@ -65,7 +72,7 @@ jobs:
       - name: Build Library
         run: |
           jf mvn clean install \
-          -Dapp.version=1.2.3 \
+          -Dapp.version=${{ inputs.version }} \
           --build-name=tomj-time-lib \
           --build-number ${{ github.run_number }}
 

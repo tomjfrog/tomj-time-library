@@ -32,7 +32,7 @@ def main():
     args = parser.parse_args()
 
     # Call the search function with the provided GitHub SHA
-    get_build_dependencies(args.commit_sha, args.access_token)
+    get_build_dependencies(args.build_name, args.build_number, args.access_token)
 
 if __name__ == "__main__":
     main()

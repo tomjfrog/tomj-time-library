@@ -58,7 +58,7 @@ jobs:
         id: get-build-dependencies
         working-directory: .github/workflows
         run: |
-          python3 find-build-dependencies.py --build_name ${{ steps.set-build-info.outputs.build_name }} --build_number ${{ steps.set-build-info.outputs.build_name }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }} > dependency-query-result.json
+          python3 find-build-dependencies.py --build_name ${{ steps.set-build-info.outputs.build_name }} --build_number ${{ steps.set-build-info.outputs.build_number }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }} > dependency-query-result.json
           cat dependency-query-result.json
           dependency_list=$(jq '.results[].modules[].dependencies[]."dependency.name"' dependency-query-result.json)
           echo "dependency_list=dependency_list" >> $GITHUB_OUTPUT

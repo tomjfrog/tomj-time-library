@@ -72,7 +72,9 @@ jobs:
       - name: Get Abbreviated Commit SHA
         id: short_sha
         run: |
+          echo $(git rev-parse --short HEAD) 
           short_sha=$(git rev-parse --short HEAD)
+          echo $short_sha
           echo "short_sha=short_sha" >> $GITHUB_OUTPUT
 
       - name: Set Version

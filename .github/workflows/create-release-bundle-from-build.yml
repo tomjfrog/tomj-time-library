@@ -68,7 +68,7 @@ jobs:
         working-directory: .github/workflows
         run: |
           pattern=$(python3 generate-local-repository-search-pattern.py)
-          jf rt cp --spec=./filespecs/copy-deps-to-local-repo.json --spec-vars="PATTERN=pattern"
+          jf rt cp --spec=./filespecs/add-local-maven-repo-deps.json --spec-vars="PATTERN=pattern"
 
       - name: Create Release Bundle
         id: create-release-bundle

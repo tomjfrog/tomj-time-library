@@ -45,9 +45,15 @@ def construct_maven_paths(dependencies):
 
     return file_paths
 
+def escape_special_chars_except_slashes(path):
+    """Escapes special regex characters except for slashes (/) and hyphens (-)."""
+    # Escape only necessary characters for regex and keep slashes and hyphens intact
+    return re.sub(r'([\\^$+*?{}[\]()])', r'\\\1', path)
+
 def generate_regex_pattern(file_paths):
     """Generates a regular expression pattern that matches the 'mavencentral-remote/' file paths."""
-    escaped_paths = [re.escape(path) for path in file_paths]
+    # Do not escape slashes (/) and hyphens (-)
+    escaped_paths = [escape_special_chars_except_slashes(path) for path in file_paths]
     regex_pattern = '|'.join(escaped_paths)
     return regex_pattern
 
@@ -65,7 +71,6 @@ if __name__ == '__main__':
         # Step 4: Generate a RegEx pattern to match the files with 'mavencentral-remote/' prefix
         regex_pattern = generate_regex_pattern(file_paths)
 
-        print("Generated RegEx pattern:")
         print(regex_pattern)
 
     except Exception as e:

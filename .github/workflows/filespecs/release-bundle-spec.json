@@ -2,7 +2,6 @@
   "files": [
     {
       "pattern": "tomj-time-lib-dependencies-local/*",
-      "project": "tomj-time-lib",
       "recursive": "true"
     }
   ]

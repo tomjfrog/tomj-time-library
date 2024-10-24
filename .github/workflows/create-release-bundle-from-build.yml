@@ -68,6 +68,7 @@ jobs:
         working-directory: .github/workflows/filespecs
         run: |
           jf rt cp \
+          --project=tomj-time-lib
           --spec=add-local-maven-repo-deps.json \
           --spec-vars="TARGET_REPO=tomj-time-lib-dependencies-local;BUILD_NAME=${{ steps.set-build-info.outputs.build_name }};BUILD_NUMBER=${{ steps.set-build-info.outputs.build_number }}"
 

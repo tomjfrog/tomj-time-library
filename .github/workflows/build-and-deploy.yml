@@ -75,7 +75,7 @@ jobs:
           echo $(git rev-parse --short HEAD) 
           short_sha=$(git rev-parse --short HEAD)
           echo $short_sha
-          echo "short_sha=short_sha" >> $GITHUB_OUTPUT
+          echo "short_sha=$(git rev-parse --short HEAD) >> $GITHUB_OUTPUT
 
       - name: Set Version
         run: |

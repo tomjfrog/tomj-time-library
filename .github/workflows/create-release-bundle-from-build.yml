@@ -96,4 +96,5 @@ jobs:
         run: |
           jf release-bundle-promote \
           tomj-time-lib ${{ github.run_number }} DEV \
-          --signing-key="tomj-gpg-key"
+          --signing-key="tomj-gpg-key" \
+          --include-repos="global-shared-maven-snapshot-local"

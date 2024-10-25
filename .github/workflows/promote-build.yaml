@@ -15,9 +15,9 @@ on:
         required: false
         default: ''
 
-  release:
-    types:
-      - released
+#  release:
+#    types:
+#      - released
 
 jobs:
   promote:

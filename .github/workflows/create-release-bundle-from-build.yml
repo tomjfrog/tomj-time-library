@@ -6,10 +6,6 @@ permissions:
 on:
   workflow_dispatch:
     inputs:
-      build_name:
-        description: 'The name of the build to promote'
-        required: true
-        default: tomj-time-lib
       build_number:
         description: 'The number of the build to promote'
         required: false
@@ -54,7 +50,7 @@ jobs:
         if: ${{ inputs.build_number == '' }}
         id: latest-build
         run: |
-          python3 .github/workflows/find-latest-build.py --build_name ${{ inputs.build_name }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }} > latest-build-response.json
+          python3 .github/workflows/find-latest-build.py --build_name ${{ github.repository }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }} > latest-build-response.json
           cat latest-build-response.json
           build_number=$(jq -r '.results[0]["build.number"]' latest-build-response.json) >> $GITHUB_OUTPUT
 
@@ -62,7 +58,7 @@ jobs:
         id: set-build-info
         run: |
           # Check if inputs are provided, otherwise use outputs from previous step
-          echo "build_name=${{ inputs.build_name }}" >> $GITHUB_OUTPUT
+          echo "build_name=${{ github.repository }}" >> $GITHUB_OUTPUT
           echo "build_number=${{ inputs.build_number != '' && inputs.build_number || steps.latest-build.outputs.build_number }}" >> $GITHUB_OUTPUT
 
       # I'd like to include the dependencies in the Bundle, but I can't include dependencies that are only referenced in a remote repo, why?
@@ -70,7 +66,7 @@ jobs:
         id: get-build-dependencies
         working-directory: .github/workflows
         run: |
-          python3 find-build-dependencies.py --build_name ${{ steps.set-build-info.outputs.build_name }} --build_number ${{ steps.set-build-info.outputs.build_number }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }} > dependency-query-result.json
+          python3 find-build-dependencies.py --build_name ${{ github.repository }} --build_number ${{ steps.set-build-info.outputs.build_number }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }} > dependency-query-result.json
           cat dependency-query-result.json
           dependency_list=$(jq '.results[].modules[].dependencies[]."dependency.name"' dependency-query-result.json)
           echo "dependency_list=dependency_list" >> $GITHUB_OUTPUT

@@ -86,7 +86,7 @@ jobs:
       - name: Build Library
         run: |
           jf mvn clean install \
-          --build-name=tomj-time-lib \
+          --build-name=${{ github.repository }} \
           --build-number ${{ github.run_number }}
 
       - name: Prepare Build Info
@@ -100,4 +100,4 @@ jobs:
 
       - name: Set Properties on Published Artifacts
         run: |
-          jf rt set-props commit_sha=${{ github.sha }} --build tomj-time-lib/${{ github.run_number }}
+          jf rt set-props commit_sha=${{ github.sha }} --build ${{ github.repository }}/${{ github.run_number }}

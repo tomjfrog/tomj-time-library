@@ -75,6 +75,7 @@ jobs:
       - name: Copy Dependencies to Local Repo
         id: generate-local-search-pattern
         working-directory: .github/workflows/filespecs
+        continue-on-error: true
         run: |
           jf rt cp \
           --project=tomj-time-lib \

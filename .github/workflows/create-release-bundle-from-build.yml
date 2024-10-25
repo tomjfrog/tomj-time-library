@@ -25,9 +25,6 @@ jobs:
 
       - name: Checkout Code
         uses: actions/checkout@v3
-        with:
-          path: ./github/workflows
-          ref: main
 
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4

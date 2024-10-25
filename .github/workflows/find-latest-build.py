@@ -8,10 +8,7 @@ def search_builds(build_name, access_token):
 
    payload = f"""builds.find({{
            "name":"{build_name}"
-       }})
-       .include("name", "number", "created")
-       .sort({"$desc": ["created"]})
-       .limit(1)"""
+       }}).include("name", "number", "created").sort({{"$desc": ["created"]}}).limit(1)"""
 
    headers = {
        'Content-Type': "text/plain",

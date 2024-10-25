@@ -55,6 +55,7 @@ jobs:
 
       - name: Find Latest Build Number For Build Name
         if: ${{ inputs.build_number == '' }}
+        working-directory: .github/workflows
         id: latest-build
         run: |
           python3 find-latest-build.py --build_name ${{ inputs.build_name }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }} > latest-build-response.json

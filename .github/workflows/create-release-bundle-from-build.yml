@@ -52,7 +52,8 @@ jobs:
         run: |
           python3 .github/workflows/find-latest-build.py --build_name ${{ github.repository }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }} > latest-build-response.json
           cat latest-build-response.json
-          build_number=$(jq -r '.results[0]["build.number"]' latest-build-response.json) >> $GITHUB_OUTPUT
+          echo "build_number=$(jq -r '.results[0]["build.number"]' latest-build-response.json)" >> $GITHUB_OUTPUT
+          cat build_number
 
       - name: Set Build Name and Build Number to Promote
         id: set-build-info

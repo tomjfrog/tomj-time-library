@@ -9,11 +9,14 @@ on:
       build_name:
         description: 'The name of the build to promote'
         required: false
-        default: 'tomj-time-lib'
+        default: ''
       build_number:
         description: 'The number of the build to promote'
         required: false
-        default: '24'
+        default: ''
+  push:
+    tags:
+      - '*-rc-[0-9]*'
 
 jobs:
   promote:
@@ -33,7 +36,7 @@ jobs:
           oidc-audience: jfrog-github
 
       # Find the JFrog Build-Info with the COMMIT_SHA that matches the Release Tag's COMMIT_SHA pointer.  This only works
-      # if there have been new commits on the Git repo that didn't result in a new artifacy build-and-publish.  Most often,
+      # if there have been new commits on the Git repo that didn't result in a new artifact build-and-publish.  Most often,
       # this will be due to updates to this Actions spec.
       - name: Find Build Associated with Release COMMIT_SHA
         if: ${{ inputs.build_name == '' && inputs.build_number == '' }}
@@ -42,7 +45,7 @@ jobs:
         run: |
           python3 find-build.py --commit_sha ${{ github.sha }} --access_token ${{ steps.setup-jfrog-cli.outputs.oidc-token }} > build-query-result.json
           build_name=$(jq -r '.results.build.name' build-query-result.json)
-          commit_number=$(jq -r 'results.build.number' build-query-result.json)
+          build_number=$(jq -r 'results.build.number' build-query-result.json)
           echo "build_name=build_name" >> $GITHUB_OUTPUT
           echo "build_number=build_number" >> $GITHUB_OUTPUT
 

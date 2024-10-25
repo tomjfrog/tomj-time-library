@@ -11,7 +11,7 @@ on:
       version:
         description: 'Library SemVer'
         required: true
-        default: '0.0.0.0-SNAPSHOT'
+        default: '0.0.0'
 #  push:
 #    branches:
 #      - main

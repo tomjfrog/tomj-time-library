@@ -21,9 +21,19 @@ on:
 jobs:
   promote:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: ${{ github.event.ref }}
     steps:
-      - name: Checkout
+      - name: Checkout specific commit
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.ref }}
+
+      - name: Checkout latest Actions specs
+        uses: actions/checkout@v3
+        with:
+          path: ./github/workflows
+          ref: main
 
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4

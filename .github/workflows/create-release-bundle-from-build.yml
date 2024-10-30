@@ -110,6 +110,7 @@ jobs:
         working-directory: .github/workflows/filespecs
         run: |
           jf rt cp \
+          --project=tomj-time-lib \
           --spec=copy-to-global-shared.json \
           --spec-vars="BUILD=${{ github.repository }}/${{ steps.set-build-info.outputs.build_number }}" 
           

@@ -2,7 +2,7 @@
   "files": [
     {
       "pattern": "*",
-      "target": "global-maven-shared-local",
+      "target": "global-shared-maven-snapshot-local",
       "build": "${BUILD}"
     }
   ]

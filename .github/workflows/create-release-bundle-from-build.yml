@@ -99,18 +99,20 @@ jobs:
         id: promote-release-bundle-to-snapshot
         run: |
           jf release-bundle-promote \
-          tomj-time-lib ${{ github.run_number }} DEV \
+          tomj-time-lib ${{ github.run_number }} STAGE \
           --signing-key="tomj-gpg-key" \
 
       # Since we can't promote into a non-project repo, and our use-case involves copying into Global Shared repos
       # we will have to do a manual copy. This gets a little close to breaking the chain of custody of the RB, but
-      # It's what we have to work with right now
+      # It's what we have to work with right now.  The primary concern is what does this "loose" coupling represent in terms
+      # of breaking the relationship of the RB to the Artifact arriving in the Global Shared Local?
       - name: Copy Promoted RB Artifact to Global Shared Local
         id: copy-artifact-to-global-shared-local
+        continue-on-error: true
         working-directory: .github/workflows/filespecs
         run: |
           jf rt cp \
           --project=tomj-time-lib \
           --spec=copy-to-global-shared.json \
-          --spec-vars="BUILD=${{ github.repository }}/${{ steps.set-build-info.outputs.build_number }}" 
+          --spec-vars="BUILD=${{ github.repository }}/${{ steps.set-build-info.outputs.build_number }};TARGET=global-shared-maven-snapshot-local" 
           

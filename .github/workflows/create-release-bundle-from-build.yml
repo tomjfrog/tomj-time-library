@@ -91,11 +91,25 @@ jobs:
           --signing-key="tomj-gpg-key" \
           --sync=true
 
-      # Promote the Release Bundle to Dev
+      # Promote the Release Bundle to Dev.  This will only promote it into the Project repos.  It appears that
+      # "including" a non-project repo will fail with a 400 error, claiming the non-project target is not assigned to
+      # the target Environment.  This is misleading error messaging and moreover, we would need to fix this or come up
+      # an alternative.
       - name: Promote Release Bundle to Snapshot Repos
         id: promote-release-bundle-to-snapshot
         run: |
           jf release-bundle-promote \
           tomj-time-lib ${{ github.run_number }} DEV \
           --signing-key="tomj-gpg-key" \
-          --include-repos="global-shared-maven-snapshot-local"
+
+      # Since we can't promote into a non-project repo, and our use-case involves copying into Global Shared repos
+      # we will have to do a manual copy. This gets a little close to breaking the chain of custody of the RB, but
+      # It's what we have to work with right now
+      - name: Copy Promoted RB Artifact to Global Shared Local
+        id: copy-artifact-to-global-shared-local
+        working-directory: .github/workflows/filespecs
+        run: |
+          jf rt cp \
+          --spec=copy-to-global-shared.json
+          --spec-vars="BUILD=${{ github.repository }}/${{ steps.set-build-info.outputs.build_number }}"
+          

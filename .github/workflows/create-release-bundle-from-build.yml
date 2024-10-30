@@ -91,7 +91,7 @@ jobs:
           --signing-key="tomj-gpg-key" \
           --sync=true
 
-      # Promote the Release Bundle to Dev.  This will only promote it into the Project repos.  It appears that
+      # Promote the Release Bundle to Stage.  This will only promote it into the Project repos.  It appears that
       # "including" a non-project repo will fail with a 400 error, claiming the non-project target is not assigned to
       # the target Environment.  This is misleading error messaging and moreover, we would need to fix this or come up
       # an alternative.

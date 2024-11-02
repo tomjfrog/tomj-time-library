@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       BUNDLE:
-        description: 'The name of the bundle to delete'
+        description: "The name and number of the bundle. Format is 'name/version'"
         required: true
         default: ''
 
@@ -31,8 +31,6 @@ jobs:
         with:
           oidc-provider-name: github-oidc-integration
           oidc-audience: jfrog-github
-
-
 
       - name: Cleanup
         id: cleanup

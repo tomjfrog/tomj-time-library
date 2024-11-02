@@ -16,8 +16,6 @@ jobs:
       # Checkout the repository code
       - name: Checkout specific commit
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.ref }}
 
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4

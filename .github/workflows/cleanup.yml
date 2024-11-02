@@ -7,6 +7,11 @@ permissions:
 
 on:
   workflow_dispatch:
+    inputs:
+      BUNLDE:
+        description: 'The name of the bundle to delete'
+        required: true
+        default: ''
 
 jobs:
   build:

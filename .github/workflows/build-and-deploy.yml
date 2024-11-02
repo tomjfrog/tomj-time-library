@@ -17,13 +17,18 @@ on:
       - main
     paths-ignore:
       - '.github/workflows/**'
-#  pull_request:
-#    branches:
-#      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PROJECT_NAME: 'tomj-time-lib'
+      PROJECT_DEV_LOCAL_REPO: 'tomj-time-lib-maven-snapshot-local'
+      PROJECT_STAGE_LOCAL_REPO: 'tomj-time-lib-maven-stage-local'
+      PROJECT_PROD_LOCAL_REPO: 'tomj-time-lib-maven-release-local'
+      PROJECT_DEPENDENCIES_LOCAL: 'tomj-time-lib-dependencies-local'
+      GLOBAL_SHARED_COMPONENTS_SNAPSHOT_LOCAL_REPO: 'mavencentral-remote'
+      GLOBAL_SHARED_DEPENDENCIES_VIRTUAL_REPO: 'java'
 
     steps:
       # Checkout the repository code
@@ -43,7 +48,7 @@ jobs:
         id: setup-jfrog-cli
         env:
           JF_URL: ${{ vars.JF_URL }}
-          JF_PROJECT: "tomj-time-lib"
+          JF_PROJECT: ${{ vars.PROJECT_NAME }}
         with:
           oidc-provider-name: github-oidc-integration
           oidc-audience: jfrog-github
@@ -64,10 +69,10 @@ jobs:
           jf mvnc \
           --server-id-resolve=setup-jfrog-cli-server \
           --server-id-deploy=setup-jfrog-cli-server \
-          --repo-resolve-releases=mavencentral-remote \
-          --repo-resolve-snapshots=mavencentral-remote \
-          --repo-deploy-releases=tomj-time-lib-maven-snapshot-local \
-          --repo-deploy-snapshots=tomj-time-lib-maven-snapshot-local
+          --repo-resolve-releases=${{ vars.GLOBAL_SHARED_DEPENDENCIES_VIRTUAL_REPO }} \
+          --repo-resolve-snapshots=${{ vars.GLOBAL_SHARED_DEPENDENCIES_VIRTUAL_REPO }} \
+          --repo-deploy-releases=${{ vars.PROJECT_DEV_LOCAL_REPO }} \
+          --repo-deploy-snapshots=${{ vars.PROJECT_DEV_LOCAL_REPO }}
 
       # Note, the JF CLI will automatically publish build info, and will use the JF_PROJECT as the --project parameter for all commands that take can accept it.
       # This automatic publishing will not happen if a build-name, build-number or project parameter is passed in
@@ -91,8 +96,8 @@ jobs:
 
       - name: Prepare Build Info
         run: |
-          jf rt bag tomj-time-lib ${{ github.run_number }}
-          jf rt bce tomj-time-lib ${{ github.run_number }}
+          jf rt bag ${{ github.repository }} ${{ github.run_number }}
+          jf rt bce ${{ github.repository }} ${{ github.run_number }}
 
       - name: Publish Build Info
         run: |

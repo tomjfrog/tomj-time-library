@@ -1,0 +1,38 @@
+name: (WIP)Clean Up Testing Elements
+
+permissions:
+  id-token: write
+
+
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository code
+      - name: Checkout specific commit
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.ref }}
+
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        id: setup-jfrog-cli
+        env:
+          JF_URL: ${{ vars.JF_URL }}
+          JF_PROJECT: "tomj-time-lib"
+        with:
+          oidc-provider-name: github-oidc-integration
+          oidc-audience: jfrog-github
+
+
+
+      - name: Cleanup
+        id: cleanup
+        working-directory: .github/workflows/filespecs
+        run: |
+          jf rt del --spec=cleanup.json --spec-vars="BUNDLE=${{ inputs.BUNDLE }}

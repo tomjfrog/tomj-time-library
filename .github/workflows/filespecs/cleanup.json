@@ -1,0 +1,14 @@
+{
+  "files": [
+    {
+      "pattern": "*",
+      "bundle": "${BUNDLE}"
+    },
+    {
+      "pattern": "${PROJECT_STAGE_REPO}/*"
+    },
+    {
+      "pattern": "${PROJECT_PROD_REPO}/*"
+    }
+  ]
+}

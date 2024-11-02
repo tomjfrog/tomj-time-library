@@ -1,9 +1,7 @@
-name: (WIP)Clean Up Testing Elements
+name: Clean Up Testing Elements
 
 permissions:
   id-token: write
-
-
 
 on:
   workflow_dispatch:
@@ -21,7 +19,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository code
       - name: Checkout specific commit
         uses: actions/checkout@v3
 

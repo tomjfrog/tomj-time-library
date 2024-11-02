@@ -45,4 +45,4 @@ jobs:
         id: cleanup-bundle
         working-directory: .github/workflows/filespecs
         run: |
-          jf release-bundle-delete-local --quiet --sync ${{ vars.RELEASE_BUNDLE_NAME}} ${{ inputs.BUNDLE_VERSION }}
+          jf release-bundle-delete-local --quiet --sync ${{ inputs.BUNDLE_NAME}} ${{ inputs.BUNDLE_VERSION }}

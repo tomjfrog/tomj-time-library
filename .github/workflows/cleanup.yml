@@ -8,11 +8,14 @@ permissions:
 on:
   workflow_dispatch:
     inputs:
-      BUNDLE:
-        description: "The name and number of the bundle. Format is 'name/version'"
+      BUNDLE_NAME:
+        description: "The name of the bundle"
+        required: true
+        default: 'tomj-time-lib'
+      BUNDLE_VERSION:
+        description: "The version of the bundle"
         required: true
         default: ''
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,8 +35,14 @@ jobs:
           oidc-provider-name: github-oidc-integration
           oidc-audience: jfrog-github
 
-      - name: Cleanup
-        id: cleanup
+      - name: Cleanup Files
+        id: cleanup-files
         working-directory: .github/workflows/filespecs
         run: |
-          jf rt del --spec=cleanup.json --spec-vars="BUNDLE=${{ inputs.BUNDLE }};PROJECT_STAGE_REPO=${{ vars.PROJECT_STAGE_LOCAL_REPO }};PROJECT_PROD_REPO=${{ vars.PROJECT_PROD_LOCAL_REPO }}"
+          jf rt del --spec=cleanup.json --spec-vars="BUNDLE=${{ inputs.BUNDLE_NAME }}/${{ inputs.BUNDLE_VERSION }};PROJECT_STAGE_REPO=${{ vars.PROJECT_STAGE_LOCAL_REPO }};PROJECT_PROD_REPO=${{ vars.PROJECT_PROD_LOCAL_REPO }}"
+
+      - name: Cleanup Bundle
+        id: cleanup-bundle
+        working-directory: .github/workflows/filespecs
+        run: |
+          jf release-bundle-delete-local --quiet --sync ${{ vars.RELEASE_BUNDLE_NAME}} ${{ inputs.BUNDLE_VERSION }}

@@ -35,4 +35,4 @@ jobs:
         id: cleanup
         working-directory: .github/workflows/filespecs
         run: |
-          jf rt del --spec=cleanup.json --spec-vars="BUNDLE=${{ inputs.BUNDLE }}
+          jf rt del --spec=cleanup.json --spec-vars="BUNDLE=${{ inputs.BUNDLE }};PROJECT_STAGE_REPO=${{ vars.PROJECT_STAGE_LOCAL_REPO }};PROJECT_PROD_REPO=${{ vars.PROJECT_PROD_LOCAL_REPO }}"

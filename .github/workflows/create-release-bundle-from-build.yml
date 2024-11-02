@@ -86,7 +86,7 @@ jobs:
         id: create-release-bundle
         run: |
           jf release-bundle-create \
-          tomj-time-lib ${{ github.run_number }} \
+          ${{ vars.BUNDLE_NAME }} ${{ github.run_number }} \
           --spec=./.github/workflows/filespecs/release-bundle-spec.json \
           --signing-key="tomj-gpg-key" \
           --sync=true
@@ -99,7 +99,7 @@ jobs:
         id: promote-release-bundle-to-snapshot
         run: |
           jf release-bundle-promote \
-          tomj-time-lib ${{ github.run_number }} STAGE \
+          ${{ vars.BUNDLE_NAME }} ${{ github.run_number }} STAGE \
           --signing-key="tomj-gpg-key" \
 
       # Since we can't promote into a non-project repo, and our use-case involves copying into Global Shared repos
@@ -114,5 +114,5 @@ jobs:
           jf rt cp \
           --project=tomj-time-lib \
           --spec=copy-to-global-shared.json \
-          --spec-vars="BUILD=${{ github.repository }}/${{ steps.set-build-info.outputs.build_number }};TARGET=global-shared-maven-snapshot-local" 
+          --spec-vars="BUILD=${{ github.repository }}/${{ steps.set-build-info.outputs.build_number }};TARGET=${{ vars.GLOBAL_SHARED_COMPONENTS_SNAPSHOT_LOCAL_REPO }}" 
           

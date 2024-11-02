@@ -21,14 +21,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      PROJECT_NAME: 'tomj-time-lib'
-      PROJECT_DEV_LOCAL_REPO: 'tomj-time-lib-maven-snapshot-local'
-      PROJECT_STAGE_LOCAL_REPO: 'tomj-time-lib-maven-stage-local'
-      PROJECT_PROD_LOCAL_REPO: 'tomj-time-lib-maven-release-local'
-      PROJECT_DEPENDENCIES_LOCAL: 'tomj-time-lib-dependencies-local'
-      GLOBAL_SHARED_COMPONENTS_SNAPSHOT_LOCAL_REPO: 'mavencentral-remote'
-      GLOBAL_SHARED_DEPENDENCIES_VIRTUAL_REPO: 'java'
 
     steps:
       # Checkout the repository code
@@ -79,9 +71,7 @@ jobs:
       - name: Get Abbreviated Commit SHA
         id: short_sha
         run: |
-          echo $(git rev-parse --short HEAD) 
           short_sha=$(git rev-parse --short HEAD)
-          echo $short_sha
           echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Set Version

@@ -1,4 +1,4 @@
-name: Build & Publish Snapshot Library Artifact
+name: Build and Publish Snapshot Artifact
 
 permissions:
   id-token: write
@@ -15,16 +15,12 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'library/**'
-      - '!.github/workflows/**'
+    paths-ignore:
+      - '.github/workflows/**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./library
 
     steps:
       # Checkout the repository code

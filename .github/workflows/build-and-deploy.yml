@@ -73,10 +73,21 @@ jobs:
         run: |
           short_sha=$(git rev-parse --short HEAD)
           echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          
+            - name: Set value from input or default
+        id: set_value
+        run: |
+          if [ -z "${{ inputs.version }}" ]; then
+            APP_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          else
+            APP_VERSION="${{ inputs.version }}"
+          fi
+          echo "The value is: $APP_VERSION"
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
 
       - name: Set Version
         run: |
-          mvn versions:set -DnewVersion=${{ inputs.version }}-${{ steps.short_sha.outputs.short_sha }}
+          mvn versions:set -DnewVersion=${{ steps.set_value.outputs.APP_VERSION }}-${{ steps.short_sha.outputs.short_sha }}
 
       - name: Build Library
         run: |

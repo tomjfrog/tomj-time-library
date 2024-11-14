@@ -75,6 +75,7 @@ jobs:
           echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           
             - name: Set value from input or default
+      - name: Resolve Library Artifact Version
         id: set_value
         run: |
           if [ -z "${{ inputs.version }}" ]; then

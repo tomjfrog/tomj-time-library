@@ -90,6 +90,7 @@ jobs:
           --spec=./.github/workflows/filespecs/release-bundle-spec.json \
           --spec-vars="BUILD_NAME=${{ steps.set-build-info.outputs.build_name }};BUILD_NUMBER=${{ steps.set-build-info.outputs.build_number }}" \
           --signing-key="tomj-gpg-key" \
+          --project tomj-time-lib \
           --sync=true
 
       # Promote the Release Bundle to Stage.  This will only promote it into the Project repos.  It appears that

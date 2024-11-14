@@ -72,15 +72,15 @@ jobs:
           dependency_list=$(jq '.results[].modules[].dependencies[]."dependency.name"' dependency-query-result.json)
           echo "dependency_list=dependency_list" >> $GITHUB_OUTPUT
 
-      - name: Copy Dependencies to Local Repo
-        id: generate-local-search-pattern
-        working-directory: .github/workflows/filespecs
-        continue-on-error: true
-        run: |
-          jf rt cp \
-          --project=tomj-time-lib \
-          --spec=add-local-maven-repo-deps.json \
-          --spec-vars="TARGET_REPO=tomj-time-lib-dependencies-local;BUILD_NAME=${{ steps.set-build-info.outputs.build_name }};BUILD_NUMBER=${{ steps.set-build-info.outputs.build_number }}"
+#      - name: Copy Dependencies to Local Repo
+#        id: generate-local-search-pattern
+#        working-directory: .github/workflows/filespecs
+#        continue-on-error: true
+#        run: |
+#          jf rt cp \
+#          --project=tomj-time-lib \
+#          --spec=add-local-maven-repo-deps.json \
+#          --spec-vars="TARGET_REPO=tomj-time-lib-dependencies-local;BUILD_NAME=${{ steps.set-build-info.outputs.build_name }};BUILD_NUMBER=${{ steps.set-build-info.outputs.build_number }}"
 
       - name: Create Release Bundle
         id: create-release-bundle
@@ -88,6 +88,7 @@ jobs:
           jf release-bundle-create \
           ${{ vars.BUNDLE_NAME }} ${{ github.run_number }} \
           --spec=./.github/workflows/filespecs/release-bundle-spec.json \
+          --spec-vars="BUILD_NAME=${{ steps.set-build-info.outputs.build_name }};BUILD_NUMBER=${{ steps.set-build-info.outputs.build_number }}" \
           --signing-key="tomj-gpg-key" \
           --sync=true
 

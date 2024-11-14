@@ -1,8 +1,7 @@
 {
   "files": [
     {
-      "pattern": "tomj-time-lib-dependencies-local/*",
-      "recursive": "true"
+      "build": "${BUILD_NAME}/${BUILD_NUMBER}"
     }
   ]
 }

@@ -74,7 +74,6 @@ jobs:
           short_sha=$(git rev-parse --short HEAD)
           echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           
-            - name: Set value from input or default
       - name: Resolve Library Artifact Version
         id: set_value
         run: |

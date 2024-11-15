@@ -100,7 +100,7 @@ jobs:
         id: promote-release-bundle-to-snapshot
         run: |
           jf release-bundle-promote \
-          ${{ vars.BUNDLE_NAME }} ${{ github.run_number }} STAGE \
+          ${{ vars.BUNDLE_NAME }} ${{ github.run_number }} DEV \
           --signing-key="tomj-gpg-key" \
 
       # Since we can't promote into a non-project repo, and our use-case involves copying into Global Shared repos

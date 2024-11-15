@@ -63,8 +63,8 @@ jobs:
           --server-id-deploy=setup-jfrog-cli-server \
           --repo-resolve-releases=${{ vars.GLOBAL_SHARED_DEPENDENCIES_VIRTUAL_REPO }} \
           --repo-resolve-snapshots=${{ vars.GLOBAL_SHARED_DEPENDENCIES_VIRTUAL_REPO }} \
-          --repo-deploy-releases=${{ vars.PROJECT_DEV_LOCAL_REPO }} \
-          --repo-deploy-snapshots=${{ vars.PROJECT_DEV_LOCAL_REPO }}
+          --repo-deploy-releases=${{ vars.PROJECT_BUILD_LOCAL_REPO }} \
+          --repo-deploy-snapshots=${{ vars.PROJECT_BUILD_LOCAL_REPO }}
 
       # Note, the JF CLI will automatically publish build info, and will use the JF_PROJECT as the --project parameter for all commands that take can accept it.
       # This automatic publishing will not happen if a build-name, build-number or project parameter is passed in

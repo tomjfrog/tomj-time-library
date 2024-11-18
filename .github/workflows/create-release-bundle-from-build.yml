@@ -101,6 +101,7 @@ jobs:
         run: |
           jf release-bundle-promote \
           ${{ vars.BUNDLE_NAME }} ${{ github.run_number }} DEV \
+          --inlcude-repos="global-shared-maven-snapshot-local;tomj-time-lib-maven-snapshot-local" \
           --signing-key="tomj-gpg-key" \
 
       # Since we can't promote into a non-project repo, and our use-case involves copying into Global Shared repos

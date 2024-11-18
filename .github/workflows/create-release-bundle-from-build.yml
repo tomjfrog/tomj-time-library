@@ -100,9 +100,10 @@ jobs:
         id: promote-release-bundle-to-snapshot
         run: |
           jf release-bundle-promote \
-          ${{ vars.BUNDLE_NAME }} ${{ github.run_number }} DEV \
-          --inlcude-repos="global-shared-maven-snapshot-local;tomj-time-lib-maven-snapshot-local" \
+          --include-repos="global-shared-maven-snapshot-local;tomj-time-lib-maven-snapshot-local" \
           --signing-key="tomj-gpg-key" \
+          ${{ vars.BUNDLE_NAME }} ${{ github.run_number }} DEV
+          
 
       # Since we can't promote into a non-project repo, and our use-case involves copying into Global Shared repos
       # we will have to do a manual copy. This gets a little close to breaking the chain of custody of the RB, but

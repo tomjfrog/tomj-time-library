@@ -108,13 +108,13 @@ jobs:
       # This step is necessary if the Project "DEV" (ref the previous step's target JFrog Environment) is a different
       # JFrog Environment than the Global Shared Snapshot repo.  This is due to the limitation of RBv2 Promotion to
       # a single target environment
-      - name: Copy Promoted RB Artifact to Global Shared Local
-        id: copy-artifact-to-global-shared-local
-        continue-on-error: true
-        working-directory: .github/workflows/filespecs
-        run: |
-          jf rt cp \
-          --project=tomj-time-lib \
-          --spec=copy-to-global-shared.json \
-          --spec-vars="BUILD=${{ github.repository }}/${{ steps.set-build-info.outputs.build_number }};TARGET=${{ vars.GLOBAL_SHARED_COMPONENTS_SNAPSHOT_LOCAL_REPO }}" 
+#      - name: Copy Promoted RB Artifact to Global Shared Local
+#        id: copy-artifact-to-global-shared-local
+#        continue-on-error: true
+#        working-directory: .github/workflows/filespecs
+#        run: |
+#          jf rt cp \
+#          --project=tomj-time-lib \
+#          --spec=copy-to-global-shared.json \
+#          --spec-vars="BUILD=${{ github.repository }}/${{ steps.set-build-info.outputs.build_number }};TARGET=${{ vars.GLOBAL_SHARED_COMPONENTS_SNAPSHOT_LOCAL_REPO }}"
           
